@@ -1,17 +1,48 @@
-import { TextField } from "@mui/material"
-import { JobCard, MainPageContainer, NewJobCard } from "./MainPageStyles"
+import { Button, FormControl, TextField } from "@mui/material"
+import { GridContainer, JobCard, MainPageContainer, NewJobCard, StyledFormControl } from "./MainPageStyles"
+import { useState } from "react"
 
 const MainPage = () => {
+  const [companyName, setCompanyName] = useState("")
+  const [jobTitle, setJobTitle] = useState("")
+  const [jobLocation, setJobLocation] = useState("")
+  const [link, setLink] = useState("")
+  const [status, setStatus] = useState("")
+  const [email, setEmail] = useState("")
+
+  const handleCompanyName = (e: any) => setCompanyName(e.target.value)
+  const handleJobTitle = (e: any) => setJobTitle(e.target.value)
+  const handleJobLocation = (e: any) => setJobLocation(e.target.value)
+  const handleLink = (e: any) => setLink(e.target.value)
+  const handleStatus = (e: any) => setStatus(e.target.value)
+  const handleEmail = (e: any) => setEmail(e.target.value)
+
+  const handleAddJob = () => {
+    const formData = {
+      'Company Name:': companyName,
+      'Job Title:': jobTitle,
+      'Job Location:': jobLocation,
+      'Link:': link,
+      'Status:': status,
+      'Email:': email,
+    }
+    console.log(JSON.stringify(formData))
+  }
+
   return (
     <MainPageContainer>
       <NewJobCard>
-        <TextField>Company name</TextField>
-        <TextField>Job title</TextField>
-        <TextField>Job location</TextField>
-        <TextField>link</TextField>
-        <TextField>status</TextField>
-        <TextField>email/follow up</TextField>
-        <TextField>remove</TextField>
+        <StyledFormControl>
+          <GridContainer>
+            <TextField label="Company name" value={companyName} onChange={handleCompanyName} />
+            <TextField label="Job title" value={jobTitle} onChange={handleJobTitle} />
+            <TextField label="Job location" value={jobLocation} onChange={handleJobLocation} />
+            <TextField label="link" value={link} onChange={handleLink} />
+            <TextField label="status" value={status} onChange={handleStatus} />
+            <TextField label="email/follow up" value={email} onChange={handleEmail} />
+          </GridContainer>
+          <Button onClick={handleAddJob} sx={{width: '150px', marginTop: '10px'}} variant="contained">Add Job</Button>
+        </StyledFormControl>
       </NewJobCard>
       <JobCard>
         <h3>Company name</h3>

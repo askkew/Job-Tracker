@@ -1,6 +1,8 @@
 import { Button, FormControl, TextField } from "@mui/material"
 import { GridContainer, JobCard, MainPageContainer, NewJobCard, StyledFormControl } from "./MainPageStyles"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+// @ts-ignore
+import axios from "axios"
 
 const MainPage = () => {
   const [companyName, setCompanyName] = useState("")
@@ -19,14 +21,28 @@ const MainPage = () => {
 
   const handleAddJob = () => {
     const formData = {
-      'Company Name:': companyName,
-      'Job Title:': jobTitle,
-      'Job Location:': jobLocation,
-      'Link:': link,
-      'Status:': status,
-      'Email:': email,
+      'companyName': companyName,
+      'jobTitle': jobTitle,
+      'jobLocation': jobLocation,
+      'link': link,
+      'status': status,
+      'email': email,
     }
-    console.log(JSON.stringify(formData))
+    axios.post('http://localhost:5000/add', formData)
+      // @ts-ignore
+      .then(response => {
+        console.log(response.data);
+        setCompanyName("");
+        setJobTitle("");
+        setJobLocation("");
+        setLink("");
+        setStatus("");
+        setEmail("");
+      })
+      // @ts-ignore
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   return (

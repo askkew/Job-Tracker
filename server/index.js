@@ -10,8 +10,8 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// const uri = process.env.ATLAS_URI;
-const uri = 'mongodb+srv://admin:bnr341999@cluster0.mvgqlfd.mongodb.net/jobtracker?retryWrites=true&w=majority';
+const uri = process.env.ATLAS_URI;
+// const uri = 'mongodb+srv://admin:bnr341999@cluster0.mvgqlfd.mongodb.net/jobtracker?retryWrites=true&w=majority';
 mongoose.connect(uri);
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -30,7 +30,6 @@ if (!mongoose.models.Job) {
   mongoose.model('Job', jobSchema, 'job');
 }
 
-// Define the route handler for getting all jobs
 app.get('/jobs', async (req, res) => {
   try {
     const jobs = await mongoose.model('Job').find().exec();
@@ -41,43 +40,41 @@ app.get('/jobs', async (req, res) => {
   }
 });
 
+app.post('/jobs/add', async (req, res) => {
+  try {
+    const { companyName, jobTitle, jobLocation, link, status, email } = req.body;
+    const newJob = new mongoose.model('Job')({ companyName, jobTitle, jobLocation, link, status, email });
+    await newJob.save();
+    res.json(newJob);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// Define the route handler for updating an existing job
+app.put('/jobs/update/:id', async (req, res) => {
+  try {
+    const { companyName, jobTitle, jobLocation, link, status, email } = req.body;
+    const job = await mongoose.model('Job').findByIdAndUpdate(req.params.id, { companyName, jobTitle, jobLocation, link, status, email }, { new: true });
+    res.json(job);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// Define the route handler for deleting an existing job
+app.delete('/jobs/delete/:id', async (req, res) => {
+  try {
+    const job = await mongoose.model('Job').findByIdAndDelete(req.params.id);
+    res.json(job);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`);
 });
-
-// // Define schema and model
-// const Schema = mongoose.Schema;
-// const jobSchema = new Schema({
-  // companyName: { type: String, required: true },
-  // jobTitle: { type: Number, required: true },
-  // jobLocation: { type: String, required: true },
-  // link: { type: String, required: true },
-  // status: { type: String, required: true },
-  // email: { type: String, required: true },
-// });
-
-// const Job = mongoose.model('Job', jobSchema, 'jobtracker1');
-
-// // Add document
-
-// app.post('/add', (req, res) => {
-//   const { companyName, jobTitle, jobLocation, link, status, email } = req.body;
-//   const job = new Job({ companyName, jobTitle, jobLocation, link, status, email });
-//   job.save()
-//     .then(() => res.status(200).json('Job added'))
-//     .catch(err => res.status(400).json('Error: ' + err));
-// });
-
-// // Update document
-// app.put('/update/:id', (req, res) => {
-//   Job.findByIdAndUpdate(req.params.id, req.body, { new: true })
-//     .then(() => res.status(200).json('Job updated'))
-//     .catch(err => res.status(400).json('Error: ' + err));
-// });
-
-// // Remove document
-// app.delete('/remove/:id', (req, res) => {
-//   Job.findByIdAndRemove(req.params.id)
-//     .then(() => res.status(200).json('Job removed'))
-//     .catch(err => res.status(400).json('Error: ' + err));
-// });

@@ -1,7 +1,6 @@
 import { Button, FormControl, TextField } from "@mui/material"
 import { GridContainer, JobCard, MainPageContainer, NewJobCard, StyledFormControl } from "./MainPageStyles"
 import { useEffect, useState } from "react"
-// @ts-ignore
 import axios from "axios"
 
 const MainPage = () => {
@@ -28,21 +27,7 @@ const MainPage = () => {
       'status': status,
       'email': email,
     }
-    axios.post('http://localhost:5000/add', formData)
-      // @ts-ignore
-      .then(response => {
-        console.log(response.data);
-        setCompanyName("");
-        setJobTitle("");
-        setJobLocation("");
-        setLink("");
-        setStatus("");
-        setEmail("");
-      })
-      // @ts-ignore
-      .catch(error => {
-        console.log(error);
-      });
+    console.log(formData)
   }
 
   return (

@@ -1,5 +1,5 @@
-import { Button, FormControl, TextField } from "@mui/material"
-import { GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, StyledFormControl } from "./MainPageStyles"
+import { Button, FormControl, Link, TextField } from "@mui/material"
+import { ColumnDiv, CompanyNameText, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, StyledFormControl, StyledIconButton, TimeStampText } from "./MainPageStyles"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { primaryAccent } from "../../utils"
@@ -7,6 +7,8 @@ import { CustomButton } from "../../utils/button"
 import { AiFillEdit } from "react-icons/ai"
 import { BsCalendarDateFill } from "react-icons/bs"
 import { AiFillDelete } from "react-icons/ai"
+import { AiOutlineLink } from "react-icons/ai"
+import { AiOutlineMail } from "react-icons/ai"
 import moment from "moment"
 
 const MainPage = () => {
@@ -95,65 +97,75 @@ const MainPage = () => {
       </NewJobCard>
       <JobCard>
         <JobItemLabels>
-          <h3>Company name</h3>
-          <h3>Job title</h3>
-          <h3>Job location</h3>
-          <h3>link</h3>
-          <h3>status</h3>
-          <h3>email/follow up</h3>
-          <h3>edit <AiFillEdit /> </h3>
-          <span>Date applied <BsCalendarDateFill /> </span>
+          <CompanyNameText style={{width: '150px'}}>Company name</CompanyNameText>
+          <CompanyNameText style={{width: '200px'}}>Job title</CompanyNameText>
+          <CompanyNameText style={{width: '120px'}}>Job location</CompanyNameText>
+          <CompanyNameText style={{width: '50px'}}>Link</CompanyNameText>
+          <CompanyNameText style={{width: '100px'}}>Status</CompanyNameText>
+          <CompanyNameText style={{width: '50px'}}>Email</CompanyNameText>
+          <CompanyNameText style={{width: '80px'}}>Edit <AiFillEdit /> </CompanyNameText>
+          <CompanyNameText style={{width: '150px'}}>Date applied <BsCalendarDateFill /> </CompanyNameText>
         </JobItemLabels>
         <JobItemRow>
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index}>
-                <h3>{job.companyName}</h3>
+                <CompanyNameText style={{width: '150px'}}>{job.companyName}</CompanyNameText>
               </JobItem>
             ))}
           </JobItemColumn>
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index}>
-                <h3>{job.jobTitle}</h3>
+                <CompanyNameText style={{width: '200px'}}>{job.jobTitle}</CompanyNameText>
               </JobItem>
             ))}
           </JobItemColumn>
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index}>
-                <h3>{job.jobLocation}</h3>
+                <CompanyNameText style={{width: '120px'}}>{job.jobLocation}</CompanyNameText>
               </JobItem>
             ))}
           </JobItemColumn>
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index}>
-                <h3>{job.link}</h3>
+                <StyledIconButton style={{width: '50px', marginRight: '40px'}}>
+                  <Link href={job.link} target="_blank" >
+                    <AiOutlineLink />
+                  </Link>
+                </StyledIconButton>
               </JobItem>
             ))}
           </JobItemColumn>
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index}>
-                <h3>{job.status}</h3>
+                <CompanyNameText style={{width: '100px'}}>{job.status}</CompanyNameText>
               </JobItem>
             ))}
           </JobItemColumn>
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index}>
-                <h3>{job.email}</h3>
+                <StyledIconButton style={{width: '50px', marginRight: '40px'}}>
+                  <Link href={job.email} target="_blank" >
+                    <AiOutlineMail />
+                  </Link>
+                </StyledIconButton>
               </JobItem>
             ))}
           </JobItemColumn>
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index}>
-                <h3>{job.timestamp}</h3>
-                <button>edit</button>
-                <h3 style={{display: 'none'}}>{job._id}</h3>
-                <button onClick={() => handleRemoveJob(job._id)}>Delete <AiFillDelete /></button>
+                <ColumnDiv>
+                  <button>Saved Changes</button>
+                  <h3 style={{display: 'none'}}>{job._id}</h3>
+                  <button onClick={() => handleRemoveJob(job._id)}>Delete <AiFillDelete /></button>
+                </ColumnDiv>
+                <TimeStampText style={{marginLeft: '10px'}}>{job.timestamp}</TimeStampText>
               </JobItem>
             ))}
           </JobItemColumn>

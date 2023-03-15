@@ -10,6 +10,9 @@ const MainPage = () => {
   const [link, setLink] = useState("")
   const [status, setStatus] = useState("")
   const [email, setEmail] = useState("")
+  const [jobs, setJobs] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const [message, setMessage] = useState("")
 
   const handleCompanyName = (e: any) => setCompanyName(e.target.value)
   const handleJobTitle = (e: any) => setJobTitle(e.target.value)
@@ -18,7 +21,18 @@ const MainPage = () => {
   const handleStatus = (e: any) => setStatus(e.target.value)
   const handleEmail = (e: any) => setEmail(e.target.value)
 
-  const handleAddJob = () => {
+  const fetchData = async () => {
+    const data = await axios.get("http://localhost:5000/jobs")
+    setJobs(data);
+    console.log(data);
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+
+  const handleAddJob = async () => {
     const formData = {
       'companyName': companyName,
       'jobTitle': jobTitle,
@@ -27,11 +41,30 @@ const MainPage = () => {
       'status': status,
       'email': email,
     }
-    console.log(formData)
+    try {
+      const response = await axios.post('http://localhost:5000/jobs/add', formData);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+    fetchData();
   }
+
+  const handleRemoveJob = async (id: string) => {
+    try {
+      const response = await axios.delete(`http://localhost:5000/jobs/delete/${id}`);
+      console.log(response.data);
+      fetchData(); // refetch data after deleting the job
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <MainPageContainer>
+      <div>
+        {message}
+      </div>
       <NewJobCard>
         <StyledFormControl>
           <GridContainer>
@@ -42,18 +75,20 @@ const MainPage = () => {
             <TextField label="status" value={status} onChange={handleStatus} />
             <TextField label="email/follow up" value={email} onChange={handleEmail} />
           </GridContainer>
-          <Button onClick={handleAddJob} sx={{width: '150px', marginTop: '10px'}} variant="contained">Add Job</Button>
+          <Button onClick={handleAddJob} sx={{width: '150px', marginTop: '10px', backgroundColor: 'green'}} variant="contained">Add Job</Button>
         </StyledFormControl>
       </NewJobCard>
-      <JobCard>
-        <h3>Company name</h3>
-        <h3>Job title</h3>
-        <h3>Job location</h3>
-        <button>link</button>
-        <button>status</button>
-        <button>email/follow up</button>
-        <button>remove</button>
-      </JobCard>
+      { jobs && jobs?.data.map((job: any, index: any) => (
+        <JobCard key={index}>
+          <h3>{job.companyName}</h3>
+          <h3>{job.jobTitle}</h3>
+          <h3>{job.jobLocation}</h3>
+          <button>{job.link}</button>
+          <button>{job.status}</button>
+          <button>{job.email}</button>
+          <button onClick={() => handleRemoveJob(job._id)}>remove</button>
+        </JobCard>
+      ))}
     </MainPageContainer>
   )
 }

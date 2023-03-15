@@ -25,7 +25,8 @@ if (!mongoose.models.Job) {
     jobLocation: { type: String, required: true },
     link: { type: String, required: true },
     status: { type: String, required: true },
-    email: { type: String, required: true }
+    email: { type: String, required: true },
+    timestamp: { type: String, required: true },
   });
   mongoose.model('Job', jobSchema, 'job');
 }
@@ -42,8 +43,8 @@ app.get('/jobs', async (req, res) => {
 
 app.post('/jobs/add', async (req, res) => {
   try {
-    const { companyName, jobTitle, jobLocation, link, status, email } = req.body;
-    const newJob = new mongoose.model('Job')({ companyName, jobTitle, jobLocation, link, status, email });
+    const { companyName, jobTitle, jobLocation, link, status, email, timestamp } = req.body;
+    const newJob = new mongoose.model('Job')({ companyName, jobTitle, jobLocation, link, status, email, timestamp });
     await newJob.save();
     res.json(newJob);
   } catch (err) {
@@ -55,8 +56,8 @@ app.post('/jobs/add', async (req, res) => {
 // Define the route handler for updating an existing job
 app.put('/jobs/update/:id', async (req, res) => {
   try {
-    const { companyName, jobTitle, jobLocation, link, status, email } = req.body;
-    const job = await mongoose.model('Job').findByIdAndUpdate(req.params.id, { companyName, jobTitle, jobLocation, link, status, email }, { new: true });
+    const { companyName, jobTitle, jobLocation, link, status, email, timestamp } = req.body;
+    const job = await mongoose.model('Job').findByIdAndUpdate(req.params.id, { companyName, jobTitle, jobLocation, link, status, email, timestamp }, { new: true });
     res.json(job);
   } catch (err) {
     console.error(err);

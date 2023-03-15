@@ -1,5 +1,5 @@
 import { Button, FormControl, TextField } from "@mui/material"
-import { GridContainer, JobCard, JobItem, JobItemLabels, MainPageContainer, NewJobCard, StyledFormControl } from "./MainPageStyles"
+import { GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, StyledFormControl } from "./MainPageStyles"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { primaryAccent } from "../../utils"
@@ -7,6 +7,7 @@ import { CustomButton } from "../../utils/button"
 import { AiFillEdit } from "react-icons/ai"
 import { BsCalendarDateFill } from "react-icons/bs"
 import { AiFillDelete } from "react-icons/ai"
+import moment from "moment"
 
 const MainPage = () => {
   const [companyName, setCompanyName] = useState("")
@@ -45,6 +46,7 @@ const MainPage = () => {
   }
   
   const handleAddJob = async () => {
+    const timestamp = moment().format('MMMM Do YYYY, h:mm:ss a');
     const formData = {
       'companyName': companyName,
       'jobTitle': jobTitle,
@@ -52,6 +54,7 @@ const MainPage = () => {
       'link': link,
       'status': status,
       'email': email,
+      'timestamp': timestamp
     }
     try {
       const response = await axios.post('http://localhost:5000/jobs/add', formData);
@@ -92,7 +95,7 @@ const MainPage = () => {
       </NewJobCard>
       <JobCard>
         <JobItemLabels>
-          <h5>Company name</h5>
+          <h3>Company name</h3>
           <h3>Job title</h3>
           <h3>Job location</h3>
           <h3>link</h3>
@@ -101,18 +104,60 @@ const MainPage = () => {
           <h3>edit <AiFillEdit /> </h3>
           <span>Date applied <BsCalendarDateFill /> </span>
         </JobItemLabels>
-        { jobs && jobs?.data.map((job: any, index: any) => (
-          <JobItem key={index}>
-            <h3>{job.companyName}</h3>
-            <h3>{job.jobTitle}</h3>
-            <h3>{job.jobLocation}</h3>
-            <button>{job.link}</button>
-            <button>{job.status}</button>
-            <button>{job.email}</button>
-            <button>edit</button>
-            <button onClick={() => handleRemoveJob(job._id)}>Delete <AiFillDelete /></button>
-          </JobItem>
-        ))}
+        <JobItemRow>
+          <JobItemColumn>
+            { jobs && jobs?.data.map((job: any, index: any) => (
+              <JobItem key={index}>
+                <h3>{job.companyName}</h3>
+              </JobItem>
+            ))}
+          </JobItemColumn>
+          <JobItemColumn>
+            { jobs && jobs?.data.map((job: any, index: any) => (
+              <JobItem key={index}>
+                <h3>{job.jobTitle}</h3>
+              </JobItem>
+            ))}
+          </JobItemColumn>
+          <JobItemColumn>
+            { jobs && jobs?.data.map((job: any, index: any) => (
+              <JobItem key={index}>
+                <h3>{job.jobLocation}</h3>
+              </JobItem>
+            ))}
+          </JobItemColumn>
+          <JobItemColumn>
+            { jobs && jobs?.data.map((job: any, index: any) => (
+              <JobItem key={index}>
+                <h3>{job.link}</h3>
+              </JobItem>
+            ))}
+          </JobItemColumn>
+          <JobItemColumn>
+            { jobs && jobs?.data.map((job: any, index: any) => (
+              <JobItem key={index}>
+                <h3>{job.status}</h3>
+              </JobItem>
+            ))}
+          </JobItemColumn>
+          <JobItemColumn>
+            { jobs && jobs?.data.map((job: any, index: any) => (
+              <JobItem key={index}>
+                <h3>{job.email}</h3>
+              </JobItem>
+            ))}
+          </JobItemColumn>
+          <JobItemColumn>
+            { jobs && jobs?.data.map((job: any, index: any) => (
+              <JobItem key={index}>
+                <h3>{job.timestamp}</h3>
+                <button>edit</button>
+                <h3 style={{display: 'none'}}>{job._id}</h3>
+                <button onClick={() => handleRemoveJob(job._id)}>Delete <AiFillDelete /></button>
+              </JobItem>
+            ))}
+          </JobItemColumn>
+        </JobItemRow>
       </JobCard>
     </MainPageContainer>
   )

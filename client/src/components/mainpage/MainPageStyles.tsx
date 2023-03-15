@@ -66,3 +66,17 @@ export const StyledFormControl = styled(FormControl)(({theme}) => ({
   alignItems: 'center',
   justifyContent: 'center',
 }));
+
+export const JobItemColumn = styled('div')(({theme}) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'left',
+  justifyContent: 'left',
+}));
+
+export const JobItemRow = styled('div')(({theme}) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'left',
+  justifyContent: 'left',
+}));

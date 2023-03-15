@@ -1,4 +1,4 @@
-import { Button, FormControl, InputBase, Link, TextField } from "@mui/material"
+import { Button, FormControl, InputBase, Link, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
 import { RowDiv, CompanyNameText, CustomInputField, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, SaveButton, StyledFormControl, StyledIconButton, TimeStampText, AlertContainer } from "./MainPageStyles"
 import { useEffect, useState } from "react"
 import axios from "axios"
@@ -30,6 +30,12 @@ const MainPage = () => {
   const handleLink = (e: any) => setLink(e.target.value)
   const handleStatus = (e: any) => setStatus(e.target.value)
   const handleEmail = (e: any) => setEmail(e.target.value)
+
+  const [stat, setStat] = useState('');
+
+  const handleSelectChange = (event: SelectChangeEvent) => {
+    setStat(event.target.value as string);
+  };
 
   const fetchData = async () => {
     const data = await axios.get("http://localhost:5000/jobs")
@@ -123,8 +129,8 @@ const MainPage = () => {
           <CompanyNameText style={{width: '50px'}}>Link</CompanyNameText>
           <CompanyNameText style={{width: '100px'}}>Status</CompanyNameText>
           <CompanyNameText style={{width: '50px'}}>Email</CompanyNameText>
-          <CompanyNameText style={{width: '120px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>Edit <AiFillEdit style={{marginLeft: '6px'}} /> </CompanyNameText>
-          <CompanyNameText style={{width: '150px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>Date applied <BsCalendarDateFill style={{marginLeft: '6px'}} /> </CompanyNameText>
+          <CompanyNameText style={{width: '160px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>Edit <AiFillEdit style={{marginLeft: '6px'}} /> </CompanyNameText>
+          <CompanyNameText style={{width: '240px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>Date applied <BsCalendarDateFill style={{marginLeft: '6px'}} /> </CompanyNameText>
         </JobItemLabels>
         <JobItemRow>
           <JobItemColumn>
@@ -153,7 +159,7 @@ const MainPage = () => {
               <JobItem key={index}>
                 <StyledIconButton style={{width: '50px', marginRight: '40px', marginTop: '2px', marginBottom: '2px',}}>
                   <Link href={job.link} target="_blank" >
-                    <AiOutlineLink />
+                    <AiOutlineLink style={{color: primaryAccent}} />
                   </Link>
                 </StyledIconButton>
               </JobItem>
@@ -162,6 +168,17 @@ const MainPage = () => {
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index}>
+                {/* <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={stat}
+                  label="Age"
+                  onChange={handleSelectChange}
+                >
+                  <MenuItem value={10}>Applied</MenuItem>
+                  <MenuItem value={20}>Interviewing</MenuItem>
+                  <MenuItem value={30}>Rejected</MenuItem>
+                </Select> */}
                 <CompanyNameText style={{width: '100px'}}>{job.status}</CompanyNameText>
               </JobItem>
             ))}
@@ -171,7 +188,7 @@ const MainPage = () => {
               <JobItem key={index}>
                 <StyledIconButton style={{width: '50px', marginRight: '40px', marginTop: '2px', marginBottom: '2px',}}>
                   <Link href={job.email} target="_blank" >
-                    <AiOutlineMail />
+                    <AiOutlineMail style={{color: primaryAccent}} />
                   </Link>
                 </StyledIconButton>
               </JobItem>
@@ -184,7 +201,7 @@ const MainPage = () => {
                   <SaveButton>Save Changes</SaveButton>
                   <h3 style={{display: 'none'}}>{job._id}</h3>
                   <StyledIconButton onClick={() => handleRemoveJob(job._id)} style={{width: '50px', marginRight: '40px'}}>
-                    <AiFillDelete />
+                    <AiFillDelete style={{color: '#DD2230'}} />
                   </StyledIconButton>
                 </RowDiv>
                 <TimeStampText style={{marginLeft: '10px', marginTop: '10px', marginBottom: '10px',}}>{job.timestamp}</TimeStampText>

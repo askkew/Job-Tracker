@@ -1,7 +1,12 @@
 import { Button, FormControl, TextField } from "@mui/material"
-import { GridContainer, JobCard, MainPageContainer, NewJobCard, StyledFormControl } from "./MainPageStyles"
+import { GridContainer, JobCard, JobItem, JobItemLabels, MainPageContainer, NewJobCard, StyledFormControl } from "./MainPageStyles"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { primaryAccent } from "../../utils"
+import { CustomButton } from "../../utils/button"
+import { AiFillEdit } from "react-icons/ai"
+import { BsCalendarDateFill } from "react-icons/bs"
+import { AiFillDelete } from "react-icons/ai"
 
 const MainPage = () => {
   const [companyName, setCompanyName] = useState("")
@@ -13,6 +18,7 @@ const MainPage = () => {
   const [jobs, setJobs] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState("")
+  const [editFields, setEditFields] = useState<any>({})
 
   const handleCompanyName = (e: any) => setCompanyName(e.target.value)
   const handleJobTitle = (e: any) => setJobTitle(e.target.value)
@@ -31,7 +37,13 @@ const MainPage = () => {
     fetchData()
   }, [])
 
-
+  const handleEditField = (fieldName: string) => {
+    setEditFields((prevState: any) => ({
+      ...prevState,
+      [fieldName]: true,
+    }))
+  }
+  
   const handleAddJob = async () => {
     const formData = {
       'companyName': companyName,
@@ -75,20 +87,33 @@ const MainPage = () => {
             <TextField label="status" value={status} onChange={handleStatus} />
             <TextField label="email/follow up" value={email} onChange={handleEmail} />
           </GridContainer>
-          <Button onClick={handleAddJob} sx={{width: '150px', marginTop: '10px', backgroundColor: 'green'}} variant="contained">Add Job</Button>
+          <CustomButton style={{width: '140px', marginTop: '10px'}} onClick={handleAddJob}>Add Job</CustomButton>
         </StyledFormControl>
       </NewJobCard>
-      { jobs && jobs?.data.map((job: any, index: any) => (
-        <JobCard key={index}>
-          <h3>{job.companyName}</h3>
-          <h3>{job.jobTitle}</h3>
-          <h3>{job.jobLocation}</h3>
-          <button>{job.link}</button>
-          <button>{job.status}</button>
-          <button>{job.email}</button>
-          <button onClick={() => handleRemoveJob(job._id)}>remove</button>
-        </JobCard>
-      ))}
+      <JobCard>
+        <JobItemLabels>
+          <h5>Company name</h5>
+          <h3>Job title</h3>
+          <h3>Job location</h3>
+          <h3>link</h3>
+          <h3>status</h3>
+          <h3>email/follow up</h3>
+          <h3>edit <AiFillEdit /> </h3>
+          <span>Date applied <BsCalendarDateFill /> </span>
+        </JobItemLabels>
+        { jobs && jobs?.data.map((job: any, index: any) => (
+          <JobItem key={index}>
+            <h3>{job.companyName}</h3>
+            <h3>{job.jobTitle}</h3>
+            <h3>{job.jobLocation}</h3>
+            <button>{job.link}</button>
+            <button>{job.status}</button>
+            <button>{job.email}</button>
+            <button>edit</button>
+            <button onClick={() => handleRemoveJob(job._id)}>Delete <AiFillDelete /></button>
+          </JobItem>
+        ))}
+      </JobCard>
     </MainPageContainer>
   )
 }

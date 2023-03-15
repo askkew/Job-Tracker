@@ -1,7 +1,7 @@
 import { styled } from "@mui/material/styles";
 import Card from '@mui/material/Card';
-import { FormControl, IconButton, Typography } from "@mui/material";
-import { primaryDarkLight } from "../../utils";
+import { FormControl, IconButton, InputBase, Typography } from "@mui/material";
+import { primaryDark, primaryDarkLight } from "../../utils";
 
 export const MainPageContainer = styled('div')(({theme}) => ({
   display: 'flex',
@@ -111,4 +111,15 @@ export const StyledIconButton = styled(IconButton)(({theme}) => ({
 export const ColumnDiv = styled('div')(({theme}) => ({
   display: 'flex',
   flexDirection: 'column',
+}));
+
+export const CustomInputField = styled(InputBase)(({theme}) => ({
+  display: 'flex',
+  justifyContent: 'left',
+  alignItems: 'left',
+  borderRadius: '25px',
+  backgroundColor: theme.palette.mode === 'light' ? 'rgb(245,245,245)' : primaryDark,
+  padding: '0.4rem',
+  paddingLeft: '1rem',
+  margin: '0.2rem',
 }));

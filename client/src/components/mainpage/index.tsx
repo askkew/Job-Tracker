@@ -1,5 +1,5 @@
-import { Button, FormControl, Link, TextField } from "@mui/material"
-import { ColumnDiv, CompanyNameText, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, StyledFormControl, StyledIconButton, TimeStampText } from "./MainPageStyles"
+import { Button, FormControl, InputBase, Link, TextField } from "@mui/material"
+import { ColumnDiv, CompanyNameText, CustomInputField, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, StyledFormControl, StyledIconButton, TimeStampText } from "./MainPageStyles"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { primaryAccent } from "../../utils"
@@ -65,6 +65,12 @@ const MainPage = () => {
       console.error(error);
     }
     fetchData();
+    setCompanyName('');
+    setJobTitle('');
+    setJobLocation('');
+    setLink('');
+    setStatus('');
+    setEmail('');
   }
 
   const handleRemoveJob = async (id: string) => {
@@ -85,12 +91,12 @@ const MainPage = () => {
       <NewJobCard>
         <StyledFormControl>
           <GridContainer>
-            <TextField label="Company name" value={companyName} onChange={handleCompanyName} />
-            <TextField label="Job title" value={jobTitle} onChange={handleJobTitle} />
-            <TextField label="Job location" value={jobLocation} onChange={handleJobLocation} />
-            <TextField label="link" value={link} onChange={handleLink} />
-            <TextField label="status" value={status} onChange={handleStatus} />
-            <TextField label="email/follow up" value={email} onChange={handleEmail} />
+            <CustomInputField placeholder="Company name" value={companyName} onChange={handleCompanyName} />
+            <CustomInputField placeholder="Job title" value={jobTitle} onChange={handleJobTitle} />
+            <CustomInputField placeholder="Job location" value={jobLocation} onChange={handleJobLocation} />
+            <CustomInputField placeholder="Link" value={link} onChange={handleLink} />
+            <CustomInputField placeholder="Status" value={status} onChange={handleStatus} />
+            <CustomInputField placeholder="Email" value={email} onChange={handleEmail} />
           </GridContainer>
           <CustomButton style={{width: '140px', marginTop: '10px'}} onClick={handleAddJob}>Add Job</CustomButton>
         </StyledFormControl>
@@ -103,7 +109,7 @@ const MainPage = () => {
           <CompanyNameText style={{width: '50px'}}>Link</CompanyNameText>
           <CompanyNameText style={{width: '100px'}}>Status</CompanyNameText>
           <CompanyNameText style={{width: '50px'}}>Email</CompanyNameText>
-          <CompanyNameText style={{width: '80px'}}>Edit <AiFillEdit /> </CompanyNameText>
+          <CompanyNameText style={{width: '80px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>Edit <AiFillEdit /> </CompanyNameText>
           <CompanyNameText style={{width: '150px'}}>Date applied <BsCalendarDateFill /> </CompanyNameText>
         </JobItemLabels>
         <JobItemRow>
@@ -159,7 +165,7 @@ const MainPage = () => {
           </JobItemColumn>
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
-              <JobItem key={index}>
+              <JobItem key={index} style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', alignItems: 'left',}}>
                 <ColumnDiv>
                   <button>Saved Changes</button>
                   <h3 style={{display: 'none'}}>{job._id}</h3>

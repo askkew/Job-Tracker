@@ -1,5 +1,5 @@
 import { Button, FormControl, InputBase, Link, TextField } from "@mui/material"
-import { ColumnDiv, CompanyNameText, CustomInputField, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, StyledFormControl, StyledIconButton, TimeStampText } from "./MainPageStyles"
+import { RowDiv, CompanyNameText, CustomInputField, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, SaveButton, StyledFormControl, StyledIconButton, TimeStampText, AlertContainer } from "./MainPageStyles"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { primaryAccent } from "../../utils"
@@ -20,7 +20,8 @@ const MainPage = () => {
   const [email, setEmail] = useState("")
   const [jobs, setJobs] = useState<any>(null)
   const [loading, setLoading] = useState(true)
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState(localStorage.getItem('message') || '');
+  const [showMessage, setShowMessage] = useState(localStorage.getItem('showMessage') === 'true');
   const [editFields, setEditFields] = useState<any>({})
 
   const handleCompanyName = (e: any) => setCompanyName(e.target.value)
@@ -47,6 +48,18 @@ const MainPage = () => {
     }))
   }
   
+  useEffect(() => {
+    localStorage.setItem('message', message);
+    localStorage.setItem('showMessage', showMessage.toString());
+  }, [message, showMessage]);
+
+  useEffect(() => {
+    if (message !== '') {
+      setShowMessage(true);
+      setTimeout(() => setShowMessage(false), 3000); // hide message after 3 seconds
+    }
+  }, [message]);
+
   const handleAddJob = async () => {
     const timestamp = moment().format('MMMM Do YYYY, h:mm:ss a');
     const formData = {
@@ -71,6 +84,7 @@ const MainPage = () => {
     setLink('');
     setStatus('');
     setEmail('');
+    setMessage('Job added successfully!');
   }
 
   const handleRemoveJob = async (id: string) => {
@@ -85,9 +99,9 @@ const MainPage = () => {
 
   return (
     <MainPageContainer>
-      <div>
-        {message}
-      </div>
+      <AlertContainer>
+        {showMessage && <div>{message}</div>}
+      </AlertContainer>
       <NewJobCard>
         <StyledFormControl>
           <GridContainer>
@@ -109,8 +123,8 @@ const MainPage = () => {
           <CompanyNameText style={{width: '50px'}}>Link</CompanyNameText>
           <CompanyNameText style={{width: '100px'}}>Status</CompanyNameText>
           <CompanyNameText style={{width: '50px'}}>Email</CompanyNameText>
-          <CompanyNameText style={{width: '80px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>Edit <AiFillEdit /> </CompanyNameText>
-          <CompanyNameText style={{width: '150px'}}>Date applied <BsCalendarDateFill /> </CompanyNameText>
+          <CompanyNameText style={{width: '120px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>Edit <AiFillEdit style={{marginLeft: '6px'}} /> </CompanyNameText>
+          <CompanyNameText style={{width: '150px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>Date applied <BsCalendarDateFill style={{marginLeft: '6px'}} /> </CompanyNameText>
         </JobItemLabels>
         <JobItemRow>
           <JobItemColumn>
@@ -137,7 +151,7 @@ const MainPage = () => {
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index}>
-                <StyledIconButton style={{width: '50px', marginRight: '40px'}}>
+                <StyledIconButton style={{width: '50px', marginRight: '40px', marginTop: '2px', marginBottom: '2px',}}>
                   <Link href={job.link} target="_blank" >
                     <AiOutlineLink />
                   </Link>
@@ -155,7 +169,7 @@ const MainPage = () => {
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index}>
-                <StyledIconButton style={{width: '50px', marginRight: '40px'}}>
+                <StyledIconButton style={{width: '50px', marginRight: '40px', marginTop: '2px', marginBottom: '2px',}}>
                   <Link href={job.email} target="_blank" >
                     <AiOutlineMail />
                   </Link>
@@ -166,12 +180,14 @@ const MainPage = () => {
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index} style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', alignItems: 'left',}}>
-                <ColumnDiv>
-                  <button>Saved Changes</button>
+                <RowDiv>
+                  <SaveButton>Save Changes</SaveButton>
                   <h3 style={{display: 'none'}}>{job._id}</h3>
-                  <button onClick={() => handleRemoveJob(job._id)}>Delete <AiFillDelete /></button>
-                </ColumnDiv>
-                <TimeStampText style={{marginLeft: '10px'}}>{job.timestamp}</TimeStampText>
+                  <StyledIconButton onClick={() => handleRemoveJob(job._id)} style={{width: '50px', marginRight: '40px'}}>
+                    <AiFillDelete />
+                  </StyledIconButton>
+                </RowDiv>
+                <TimeStampText style={{marginLeft: '10px', marginTop: '10px', marginBottom: '10px',}}>{job.timestamp}</TimeStampText>
               </JobItem>
             ))}
           </JobItemColumn>

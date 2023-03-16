@@ -52,8 +52,9 @@ export const NewJobCard = styled(Card)(({theme}) => ({
 }));
 
 export const GridContainer = styled('div')(({theme}) => ({
-  display: 'grid',
-  gridTemplateColumns: '200px 200px',
+  display: 'flex',
+  flexDirection: 'row',
+  // gridTemplateColumns: '200px 200px',
   // flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',

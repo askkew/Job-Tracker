@@ -117,8 +117,8 @@ const MainPage = () => {
             <CustomInputField placeholder="Link" value={link} onChange={handleLink} />
             <CustomInputField placeholder="Status" value={status} onChange={handleStatus} />
             <CustomInputField placeholder="Email" value={email} onChange={handleEmail} />
+            <CustomButton style={{width: '140px', marginLeft: '10px'}} onClick={handleAddJob}>Add Job</CustomButton>
           </GridContainer>
-          <CustomButton style={{width: '140px', marginTop: '10px'}} onClick={handleAddJob}>Add Job</CustomButton>
         </StyledFormControl>
       </NewJobCard>
       <JobCard>

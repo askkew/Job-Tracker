@@ -1,5 +1,5 @@
 import { Button, FormControl, InputBase, Link, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
-import { RowDiv, CompanyNameText, CustomInputField, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, SaveButton, StyledFormControl, StyledIconButton, TimeStampText, AlertContainer } from "./MainPageStyles"
+import { StyledSelect, RowDiv, CompanyNameText, CustomInputField, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, SaveButton, StyledFormControl, StyledIconButton, TimeStampText, AlertContainer } from "./MainPageStyles"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { primaryAccent } from "../../utils"
@@ -9,6 +9,7 @@ import { BsCalendarDateFill } from "react-icons/bs"
 import { AiFillDelete } from "react-icons/ai"
 import { AiOutlineLink } from "react-icons/ai"
 import { AiOutlineMail } from "react-icons/ai"
+import { IoLocationSharp } from "react-icons/io5"
 import moment from "moment"
 
 const MainPage = () => {
@@ -33,8 +34,8 @@ const MainPage = () => {
 
   const [stat, setStat] = useState('');
 
-  const handleSelectChange = (event: SelectChangeEvent) => {
-    setStat(event.target.value as string);
+  const handleStatusChange = (event: SelectChangeEvent) => {
+    setStat(event.target.value);
   };
 
   const fetchData = async () => {
@@ -94,12 +95,15 @@ const MainPage = () => {
   }
 
   const handleRemoveJob = async (id: string) => {
-    try {
-      const response = await axios.delete(`http://localhost:5000/jobs/delete/${id}`);
-      console.log(response.data);
-      fetchData(); // refetch data after deleting the job
-    } catch (error) {
-      console.error(error);
+    const confirmed = window.confirm('Are you sure you want to delete this job?');
+    if (confirmed) {
+      try {
+        const response = await axios.delete(`http://localhost:5000/jobs/delete/${id}`);
+        console.log(response.data);
+        fetchData(); // refetch data after deleting the job
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -125,7 +129,7 @@ const MainPage = () => {
         <JobItemLabels>
           <CompanyNameText style={{width: '150px'}}>Company name</CompanyNameText>
           <CompanyNameText style={{width: '200px'}}>Job title</CompanyNameText>
-          <CompanyNameText style={{width: '120px'}}>Job location</CompanyNameText>
+          <CompanyNameText style={{width: '130px', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>Location <IoLocationSharp style={{marginLeft: '6px'}} /> </CompanyNameText>
           <CompanyNameText style={{width: '50px'}}>Link</CompanyNameText>
           <CompanyNameText style={{width: '100px'}}>Status</CompanyNameText>
           <CompanyNameText style={{width: '50px'}}>Email</CompanyNameText>
@@ -167,26 +171,21 @@ const MainPage = () => {
           </JobItemColumn>
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
-              <JobItem key={index}>
-                {/* <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={stat}
-                  label="Age"
-                  onChange={handleSelectChange}
+              <JobItem key={index} style={{width: '100px'}}>
+                <StyledSelect
                 >
-                  <MenuItem value={10}>Applied</MenuItem>
-                  <MenuItem value={20}>Interviewing</MenuItem>
-                  <MenuItem value={30}>Rejected</MenuItem>
-                </Select> */}
-                <CompanyNameText style={{width: '100px'}}>{job.status}</CompanyNameText>
+                  <option value="0">Applied</option>
+                  <option value="1">Interviewing</option>
+                  <option value="2">Rejected</option>
+                </StyledSelect>
+                {/* <CompanyNameText style={{width: '100px'}}>{job.status}</CompanyNameText> */}
               </JobItem>
             ))}
           </JobItemColumn>
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index}>
-                <StyledIconButton style={{width: '50px', marginRight: '40px', marginTop: '2px', marginBottom: '2px',}}>
+                <StyledIconButton style={{width: '50px', marginRight: '40px', marginTop: '2px', marginBottom: '2px', marginLeft: '50px'}}>
                   <Link href={job.email} target="_blank" >
                     <AiOutlineMail style={{color: primaryAccent}} />
                   </Link>
@@ -196,7 +195,7 @@ const MainPage = () => {
           </JobItemColumn>
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
-              <JobItem key={index} style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', alignItems: 'left',}}>
+              <JobItem key={index} style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', alignItems: 'left', marginLeft: '5px'}}>
                 <RowDiv>
                   <SaveButton>Save Changes</SaveButton>
                   <h3 style={{display: 'none'}}>{job._id}</h3>

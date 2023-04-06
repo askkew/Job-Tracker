@@ -1,5 +1,5 @@
 import { Button, FormControl, InputBase, Link, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
-import { StyledSelect, RowDiv, CompanyNameText, CustomInputField, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, SaveButton, StyledFormControl, StyledIconButton, TimeStampText, AlertContainer } from "./MainPageStyles"
+import { StyledSelect, RowDiv, CompanyNameText, CustomInputField, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, SaveButton, StyledFormControl, StyledIconButton, TimeStampText, AlertContainer, StyledOption } from "./MainPageStyles"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { primaryAccent } from "../../utils"
@@ -110,7 +110,7 @@ const MainPage = () => {
   return (
     <MainPageContainer>
       <AlertContainer>
-        {showMessage && <div>{message}</div>}
+        {showMessage && <div style={{padding: '10px'}}>{message}</div>}
       </AlertContainer>
       <NewJobCard>
         <StyledFormControl>
@@ -172,12 +172,12 @@ const MainPage = () => {
           <JobItemColumn>
             { jobs && jobs?.data.map((job: any, index: any) => (
               <JobItem key={index} style={{width: '100px'}}>
-                <StyledSelect
+                <Select
                 >
-                  <option value="0">Applied</option>
-                  <option value="1">Interviewing</option>
-                  <option value="2">Rejected</option>
-                </StyledSelect>
+                  <MenuItem value="0">Applied</MenuItem>
+                  <MenuItem value="1">Interviewing</MenuItem>
+                  <MenuItem value="2">Rejected</MenuItem>
+                </Select>
                 {/* <CompanyNameText style={{width: '100px'}}>{job.status}</CompanyNameText> */}
               </JobItem>
             ))}

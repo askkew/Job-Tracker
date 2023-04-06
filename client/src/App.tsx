@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useState } from 'react';
 import Navbar from './components/navbar';
 import MainPage from './components/mainpage';
+import { ToastContainer } from 'react-toastify';
 
 const darkTheme = createTheme({
   palette: {
@@ -36,7 +37,7 @@ const lightTheme = createTheme({
 })
 
 function App() {
-  const [theme, setTheme] = useState(lightTheme);
+  const [theme, setTheme] = useState(darkTheme);
   const handleToggleTheme = () => {
     if (theme?.palette?.mode === 'dark') setTheme(lightTheme);
     else setTheme(darkTheme)
@@ -46,6 +47,7 @@ function App() {
       <CssBaseline />
       <Navbar theme={theme} handleToggleTheme={handleToggleTheme} />
       <MainPage />
+      <ToastContainer />
     </ThemeProvider>
   );
 }

@@ -11,6 +11,8 @@ import { AiOutlineLink } from "react-icons/ai"
 import { AiOutlineMail } from "react-icons/ai"
 import { IoLocationSharp } from "react-icons/io5"
 import moment from "moment"
+import { toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
 const MainPage = () => {
   const [companyName, setCompanyName] = useState("")
@@ -91,7 +93,16 @@ const MainPage = () => {
     setLink('');
     setStatus('');
     setEmail('');
-    setMessage('Job added successfully!');
+    toast('Job added!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
   }
 
   const handleRemoveJob = async (id: string) => {
@@ -109,9 +120,6 @@ const MainPage = () => {
 
   return (
     <MainPageContainer>
-      <AlertContainer>
-        {showMessage && <div style={{padding: '10px'}}>{message}</div>}
-      </AlertContainer>
       <NewJobCard>
         <StyledFormControl>
           <GridContainer>

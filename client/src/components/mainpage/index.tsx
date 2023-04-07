@@ -1,5 +1,5 @@
 import { Button, FormControl, InputBase, Link, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
-import { StyledSelect, RowDiv, CompanyNameText, CustomInputField, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, SaveButton, StyledFormControl, StyledIconButton, TimeStampText, AlertContainer, StyledOption, SmallCardContainer } from "./MainPageStyles"
+import { StyledSelect, RowDiv, CompanyNameText, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, SaveButton, StyledFormControl, StyledIconButton, TimeStampText, AlertContainer, StyledOption, SmallCardContainer } from "./MainPageStyles"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { primaryAccent } from "../../utils"
@@ -26,8 +26,6 @@ const MainPage = () => {
   const [email, setEmail] = useState("")
   const [jobs, setJobs] = useState<any>(null)
   const [loading, setLoading] = useState(true)
-  const [message, setMessage] = useState(localStorage.getItem('message') || '');
-  const [showMessage, setShowMessage] = useState(localStorage.getItem('showMessage') === 'true');
   const [editFields, setEditFields] = useState<any>({})
 
   const handleCompanyName = (e: any) => setCompanyName(e.target.value)
@@ -59,18 +57,6 @@ const MainPage = () => {
       [fieldName]: true,
     }))
   }
-  
-  useEffect(() => {
-    localStorage.setItem('message', message);
-    localStorage.setItem('showMessage', showMessage.toString());
-  }, [message, showMessage]);
-
-  useEffect(() => {
-    if (message !== '') {
-      setShowMessage(true);
-      setTimeout(() => setShowMessage(false), 3000); // hide message after 3 seconds
-    }
-  }, [message]);
 
   const handleAddJob = async () => {
     const timestamp = moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -128,19 +114,6 @@ const MainPage = () => {
         <TotalCard />
         <DeniedCard />
       </SmallCardContainer>
-      <NewJobCard>
-        <StyledFormControl>
-          <GridContainer>
-            <CustomInputField placeholder="Company name" value={companyName} onChange={handleCompanyName} />
-            <CustomInputField placeholder="Job title" value={jobTitle} onChange={handleJobTitle} />
-            <CustomInputField placeholder="Job location" value={jobLocation} onChange={handleJobLocation} />
-            <CustomInputField placeholder="Link" value={link} onChange={handleLink} />
-            <CustomInputField placeholder="Status" value={status} onChange={handleStatus} />
-            <CustomInputField placeholder="Email" value={email} onChange={handleEmail} />
-            <CustomButton style={{width: '140px', marginLeft: '10px'}} onClick={handleAddJob}>Add Job</CustomButton>
-          </GridContainer>
-        </StyledFormControl>
-      </NewJobCard>
       <JobCard>
         <JobItemLabels>
           <CompanyNameText style={{width: '150px'}}>Company name</CompanyNameText>

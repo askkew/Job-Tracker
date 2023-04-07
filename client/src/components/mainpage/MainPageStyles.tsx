@@ -124,16 +124,16 @@ export const RowDiv = styled('div')(({theme}) => ({
   // marginBottom: '11px',
 }));
 
-export const CustomInputField = styled(InputBase)(({theme}) => ({
-  display: 'flex',
-  justifyContent: 'left',
-  alignItems: 'left',
-  borderRadius: '25px',
-  backgroundColor: theme.palette.mode === 'light' ? 'rgb(245,245,245)' : primaryDark,
-  padding: '0.4rem',
-  paddingLeft: '1rem',
-  margin: '0.2rem',
-}));
+// export const CustomInputField = styled(InputBase)(({theme}) => ({
+//   display: 'flex',
+//   justifyContent: 'left',
+//   alignItems: 'left',
+//   borderRadius: '25px',
+//   backgroundColor: theme.palette.mode === 'light' ? 'rgb(245,245,245)' : primaryDark,
+//   padding: '0.4rem',
+//   paddingLeft: '1rem',
+//   margin: '0.2rem',
+// }));
 
 export const SaveButton = styled(CustomButton)(({theme}) => ({
   backgroundColor: primaryAccent,

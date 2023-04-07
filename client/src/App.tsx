@@ -10,6 +10,7 @@ import { Route } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Login from './components/login';
 import Register from './components/register';
+import CreateNew from './components/createjob';
 
 const darkTheme = createTheme({
   palette: {
@@ -62,7 +63,7 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/profile" element={<MainPage />} />
             <Route path="/resume" element={<MainPage />} />
-            <Route path="/createnew" element={<MainPage />} />
+            <Route path="/createnew" element={<CreateNew />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>

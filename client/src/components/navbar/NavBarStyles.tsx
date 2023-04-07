@@ -1,10 +1,11 @@
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
-import { primaryAccent, primaryDark, primaryDarkLight } from "../../utils";
-import { RiLoginBoxFill } from "react-icons/ri";
-import { FaUserCircle } from "react-icons/fa";
-import { IoSettingsSharp } from "react-icons/io5";
-import { BsMoonStars, BsSun } from "react-icons/bs";
+import { fourthAccent, primaryAccent, primaryDark, primaryDarkLight, secondaryAccent, tertiaryAccent } from "../../utils";
+import { RiLoginBoxFill, RiDashboardFill } from "react-icons/ri";
+import { IoSettingsSharp, IoCreate } from "react-icons/io5";
+import { HiDocument } from "react-icons/hi";
+import { BsMoonStars, BsSun, BsFillPersonFill } from "react-icons/bs";
+import { NavLink as Link } from 'react-router-dom';
 
 export const NavBarContainer = styled('div')(({theme}) => ({
   display: 'flex',
@@ -22,11 +23,6 @@ export const NavBarContainer = styled('div')(({theme}) => ({
 export const AppTitle = styled('h1')(({theme}) => ({
   color: theme.palette.mode === 'light' ? 'black' : primaryAccent,
   fontSize: '2rem',
-}));
-
-export const StyledUserIcon = styled(FaUserCircle)(({ theme }) => ({
-  fontSize: "2rem",
-  color: theme.palette.mode === 'light' ? 'black' : primaryAccent,
 }));
 
 export const StyledSettingIcon = styled(IoSettingsSharp)(({ theme }) => ({
@@ -84,3 +80,48 @@ export const ThemeButton = styled('div')(({ theme }) => ({
 
 //----------------------------
 
+export const NavLinkStyled = styled('nav')({
+  textDecoration: 'none',
+  backgroundColor: secondaryAccent,
+  width: '100%',
+  textAlign: 'center',
+  padding: '10px',
+})
+
+export const NavBtnLink = styled(Link)({
+  textDecoration: 'none',
+  color: 'white',
+})
+
+export const NavLinkCreate = styled('nav')({
+  textDecoration: 'none',
+  backgroundColor: fourthAccent,
+  width: '100%',
+  textAlign: 'center',
+  padding: '10px',
+})
+
+export const StyledUserIcon = styled(BsFillPersonFill)({
+  fontSize: "2rem",
+  color: 'white',
+});
+
+export const StyledCreateIcon = styled(IoCreate)({
+  fontSize: "2rem",
+  color: 'white',
+});
+
+export const StyledLoginIcon = styled(RiLoginBoxFill)({
+  fontSize: "2rem",
+  color: 'white',
+});
+
+export const StyledDocumentIcon = styled(HiDocument)({
+  fontSize: "2rem",
+  color: 'white',
+});
+
+export const StyledDashboardIcon = styled(RiDashboardFill)({
+  fontSize: "2rem",
+  color: 'white',
+});

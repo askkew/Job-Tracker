@@ -1,4 +1,4 @@
-import { AppTitle, IconButtonStyle, IconGroup, NavBarContainer, StyledInput, StyledMoonIcon, StyledSettingIcon, StyledSunIcon, StyledUserIcon, ThemeButton } from "./NavBarStyles"
+import { AppTitle, IconButtonStyle, IconGroup, NavBarContainer, NavBtnLink, NavLinkCreate, NavLinkStyled, StyledCreateIcon, StyledDashboardIcon, StyledDocumentIcon, StyledInput, StyledLoginIcon, StyledMoonIcon, StyledSettingIcon, StyledSunIcon, StyledUserIcon, ThemeButton } from "./NavBarStyles"
 import "./index.css";
 import { FC } from "react";
 import { CustomButton } from "../../utils/button";
@@ -14,31 +14,31 @@ export interface NavBarTypes {
 const NavBar: FC<NavBarTypes> = ({ handleToggleTheme }) => (
   <NavBarContainer>
     {/* <div className="checkbox-wrapper-54">
-          <label className="switch">
-            <input type="checkbox" onChange={handleToggleTheme}/>
-            <span className="slider"></span>
-          </label>
-        </div> */}
+      <label className="switch">
+        <input type="checkbox" onChange={handleToggleTheme}/>
+        <span className="slider"></span>
+      </label>
+    </div> */}
     <AppTitle>Job Tracker</AppTitle>
-    <nav>
-      <Link to='/profile'><StyledUserIcon /></Link>
-    </nav>
-    <nav>
-      <Link to='/'><strong>Application Dashboard</strong></Link>
-    </nav>
-    <nav>
-      <Link to='/resume'><strong>Resume</strong></Link>
-    </nav>
+    <NavLinkStyled>
+      <NavBtnLink to='/profile'><StyledUserIcon />Profile</NavBtnLink>
+    </NavLinkStyled>
+    <NavLinkStyled>
+      <NavBtnLink to='/'><strong><StyledDashboardIcon />Application Dashboard</strong></NavBtnLink>
+    </NavLinkStyled>
+    <NavLinkStyled>
+      <NavBtnLink to='/resume'><strong><StyledDocumentIcon />Resume</strong></NavBtnLink>
+    </NavLinkStyled>
     <span>---------------</span>
-    <nav>
-      <Link to='/createnew'><strong>create new job</strong></Link>
-    </nav>
-    <nav>
-      <Link to='/login'><strong>login</strong></Link>
-    </nav>
-    <nav>
-      <Link to='/register'><strong>register</strong></Link>
-    </nav>
+    <NavLinkCreate>
+      <NavBtnLink to='/createnew'><strong><StyledCreateIcon />create new job</strong></NavBtnLink>
+    </NavLinkCreate>
+    <NavLinkStyled>
+      <NavBtnLink to='/login'><strong><StyledLoginIcon />login</strong></NavBtnLink>
+    </NavLinkStyled>
+    <NavLinkStyled>
+      <NavBtnLink to='/register'><strong>register</strong></NavBtnLink>
+    </NavLinkStyled>
   </NavBarContainer>
 )
 

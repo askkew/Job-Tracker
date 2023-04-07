@@ -8,14 +8,15 @@ import { BsMoonStars, BsSun } from "react-icons/bs";
 
 export const NavBarContainer = styled('div')(({theme}) => ({
   display: 'flex',
-  flexDirection: 'row',
+  flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'top',
+  gap: '10px',
   color: theme.palette.mode === 'light' ? 'black' : 'gainsboro',
   background: theme.palette.mode === 'light' ? 'white' : primaryDarkLight,
   padding: '1rem',
   boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-  height: '100px',
+  height: '100vh',
 }));
 
 export const AppTitle = styled('h1')(({theme}) => ({

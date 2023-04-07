@@ -13,13 +13,20 @@ export const MainPageContainer = styled('div')(({theme}) => ({
   color: theme.palette.mode === 'light' ? 'black' : 'gainsboro',
 }));
 
+export const SmallCardContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '20px',
+})
+
 export const JobCard = styled(Card)(({theme}) => ({
   display: 'flex',
   flexDirection: 'column',
   color: theme.palette.mode === 'light' ? 'black' : 'gainsboro',
   background: theme.palette.mode === 'light' ? 'white' : primaryDarkLight,
   marginTop: '15px',
-  borderRadius: '14px',
 }));
 
 export const JobItem = styled('div')(({theme}) => ({
@@ -47,8 +54,6 @@ export const NewJobCard = styled(Card)(({theme}) => ({
   color: theme.palette.mode === 'light' ? 'black' : 'gainsboro',
   background: theme.palette.mode === 'light' ? 'white' : primaryDarkLight,
   padding: '1rem',
-  marginTop: '25px',
-  borderRadius: '14px',
 }));
 
 export const GridContainer = styled('div')(({theme}) => ({

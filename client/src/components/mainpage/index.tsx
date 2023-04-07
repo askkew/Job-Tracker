@@ -1,5 +1,5 @@
 import { Button, FormControl, InputBase, Link, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
-import { StyledSelect, RowDiv, CompanyNameText, CustomInputField, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, SaveButton, StyledFormControl, StyledIconButton, TimeStampText, AlertContainer, StyledOption } from "./MainPageStyles"
+import { StyledSelect, RowDiv, CompanyNameText, CustomInputField, GridContainer, JobCard, JobItem, JobItemColumn, JobItemLabels, JobItemRow, MainPageContainer, NewJobCard, SaveButton, StyledFormControl, StyledIconButton, TimeStampText, AlertContainer, StyledOption, SmallCardContainer } from "./MainPageStyles"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { primaryAccent } from "../../utils"
@@ -13,6 +13,9 @@ import { IoLocationSharp } from "react-icons/io5"
 import moment from "moment"
 import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+import PendingCard from "../pendingcard"
+import TotalCard from "../totalcard"
+import DeniedCard from "../deniedcard"
 
 const MainPage = () => {
   const [companyName, setCompanyName] = useState("")
@@ -120,6 +123,11 @@ const MainPage = () => {
 
   return (
     <MainPageContainer>
+      <SmallCardContainer>
+        <PendingCard />
+        <TotalCard />
+        <DeniedCard />
+      </SmallCardContainer>
       <NewJobCard>
         <StyledFormControl>
           <GridContainer>

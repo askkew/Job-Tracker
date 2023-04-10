@@ -21,7 +21,7 @@ export const NavBarContainer = styled('div')(({theme}) => ({
 }));
 
 export const AppTitle = styled('h1')(({theme}) => ({
-  color: theme.palette.mode === 'light' ? 'black' : primaryAccent,
+  color: 'gainsboro',
   fontSize: '2rem',
 }));
 
@@ -86,6 +86,7 @@ export const NavLinkStyled = styled('nav')({
   width: '100%',
   textAlign: 'center',
   padding: '10px',
+  cursor: 'pointer',
 })
 
 export const NavBtnLink = styled(Link)({
@@ -99,6 +100,7 @@ export const NavLinkCreate = styled('nav')({
   width: '100%',
   textAlign: 'center',
   padding: '10px',
+  cursor: 'pointer',
 })
 
 export const StyledUserIcon = styled(BsFillPersonFill)({
